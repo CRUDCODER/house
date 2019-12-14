@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liujin.mapper.LossMapper">
+        <sql id="lossQuery">
+            <if test="aid!=null and aid!=0">
+                and b.aid=#{aid}
+            </if>
+            <if test="sid!=null and sid!=0">
+                and b.sid=#{sid}
+            </if>
+            <if test="hhx!=null and hhx!=''">
+                and b.hhx=#{hhx}
+            </if>
+            <if test="hfh!=null and hfh!=''">
+                and b.hfh=#{hfh}
+            </if>
+            <if test="bid!=null and bid!=0">
+                and a.bid=#{bid}
+            </if>
+        </sql>
+
+        <select id="getAllLostInfo" parameterType="Loss" resultType="Loss">
+
+            select * from loss a, housedata b,area c,sort d,emp e  where a.hid=b.hid and b.sid=d.sid and b.aid=c.aid and a.eid=e.eid
+            <include refid="lossQuery"></include>
+        </select>
+</mapper>

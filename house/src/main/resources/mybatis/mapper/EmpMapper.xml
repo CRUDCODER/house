@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liujin.mapper.EmpMapper">
+
+    <select id="getEname" parameterType="int" resultType="Emp">
+        select ename from  emp where eid=#{eid}
+    </select>
+
+    <select id="getAllEmpInfo" resultMap="result" parameterType="emp">
+        select * from emp a,dept b,jobs c where a.pid=b.pid and a.jid=c.jid and 1=1
+        <include refid="conditions" />
+    </select>
+    <sql id="conditions">
+        <if test="eflag!=null">
+            and eflag=#{eflag}
+        </if>
+    </sql>
+    <resultMap id="result" type="Emp">
+        <id property="eid" column="eid"/>
+        <result property="ename" column="ename"/>
+        <result property="eaddress" column="eaddress"/>
+        <result property="eflag" column="eflag"/>
+        <result property="epsw" column="epsw"/>
+        <result property="eremark" column="eremark"/>
+        <result property="etel" column="etel"/>
+        <result property="erealname" column="erealname"/>
+        <result property="jname" column="jname"/>
+        <result property="pname" column="pname"/>
+        <association property="dept" javaType="Dept">
+            <id property="pid" column="pid"/>
+            <result property="pname" column="pname"/>
+        </association>
+        <association property="jobs" javaType="Jobs">
+            <id property="jid" column="jid"/>
+            <result property="jname" column="jname"/>
+        </association>
+    </resultMap>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liujin.mapper.StayinMapper">
+
+    <sql id="conditions">
+        <if test="aid!=0 and aid!='' and aid!=null">
+           and d.aid=#{aid}
+        </if>
+        <if test="sid!=0 and sid!='' and sid!=null">
+            and d.sid=#{sid}
+        </if>
+        <if test="ctel!=null and ctel!=''">
+                    and b.ctel=#{ctel}
+        </if>
+        <if test="hhx!=null and  hhx!=''">
+            and d.hhx=#{hhx}
+        </if>
+    </sql>
+
+    <select id="combinationQuery" resultType="com.liujin.entity.Stayin" parameterType="Stayin">
+        select * from stayin a,cusregistration b,emp c,housedata d,sort e,area f where a.cid=b.cid and a.eid=c.eid and a.hid= d.hid and a.mflag=1 and 1=1
+        and  d.sid=e.sid and d.aid=f.aid
+        <include refid="conditions"></include>
+    </select>
+
+
+
+</mapper>

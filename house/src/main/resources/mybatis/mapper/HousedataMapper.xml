@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liujin.mapper.HousedataMapper">
+
+    <sql id="conditions">
+        <if test="sid!=null and sid!='' and sid!=0">
+            and a.sid=#{sid}
+        </if>
+        <if test="aid!=null and aid!='' and aid!=0">
+            and a.aid=#{aid}
+        </if>
+        <if test="hmj!=null and hmj!=''">
+            and hmj&gt;=${hmj}
+        </if>
+        <if test="hmj2!=null and hmj2!='' and hmj2!=0">
+            and hmj&lt;=${hmj2}
+        </if>
+        <if test="hflag!=null">
+            and hflag=${hflag}
+        </if>
+        <if test="hid!=0 and hid!=null">
+            and a.hid=#{hid}
+        </if>
+        <if test="hhx!=null and  hhx!=''">
+            and a.hhx=#{hhx}
+        </if>
+    </sql>
+
+    <select id="getAllHouseData" resultType="Housedata" parameterType="Housedata">
+
+        select * from housedata a,area b,sort c where a.aid=b.aid and a.sid=c.sid
+        <include refid="conditions" />
+        order by  a.hid
+    </select>
+</mapper>
